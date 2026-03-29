@@ -1,5 +1,4 @@
 export PATH="$PATH:/opt/homebrew/bin"
-export PATH="$HOME/neovim/bin:$PATH"
 
 # Why not save all my commands 
 HISTFILE=~/.zsh_history
