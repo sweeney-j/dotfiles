@@ -1,0 +1,17 @@
+export PATH="$PATH:/opt/homebrew/bin"
+export PATH="$HOME/neovim/bin:$PATH"
+
+# Why not save all my commands 
+HISTFILE=~/.zsh_history
+HISTSIZE=100000
+SAVEHIST=100000
+setopt INC_APPEND_HISTORY # Save continuously 
+
+# Might want to move away from this eventually 
+export ZSH="$HOME/dotfiles/.config/zsh/.oh-my-zsh"
+ZSH_THEME="robbyrussell"
+plugins=( 
+    git
+    zsh-autosuggestions
+)
+source $ZSH/oh-my-zsh.sh
