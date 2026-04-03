@@ -7,16 +7,18 @@ return {
 	  vim.api.nvim_create_autocmd("FileType", {
 		  callback = function(data)
 			  local lang = vim.treesitter.language.get_lang(data.match)
-			  if not lang then 
-				  --I'm not sure what im doing wrong here but install is not working
-				  -- fix later 
-				  result = require('nvim-treesitter-install').install({lang}):wait(300000)
-				  print('testing %s', result)
+			  -- Only returns what was manually installed not what came with nvim. 
+			  local installed = require('nvim-treesitter.config').get_installed('parsers')
+			
+			  for _, installed_lang in pairs(installed) do
+				  if lang == installed_lang then 
+					  vim.treesitter.start(0, lang)
+					  return 
+				  end
 			  end
-			  --vim.treesitter.start(0, lang)
+			  local result = require('nvim-treesitter.install').install({lang}):wait(3000)
+			  vim.treesitter.start(0, lang)
 		  end
-})
-
-
+	  })
   end
 }
