@@ -3,21 +3,24 @@ return {
   lazy = false,
   build = ':TSUpdate', 
   config = function()
+	  local available = require('nvim-treesitter.config').get_available(); 
+	  local available_set = {} 
+	  for _, lang in ipairs(available) do
+		  available_set[lang] = true
+	  end
+
 	  -- Seems like a really bad way to do it but ok for now. 
 	  vim.api.nvim_create_autocmd("FileType", {
 		  callback = function(data)
 			  local lang = vim.treesitter.language.get_lang(data.match)
-			  -- Only returns what was manually installed not what came with nvim. 
-			  local installed = require('nvim-treesitter.config').get_installed('parsers')
-			
-			  for _, installed_lang in pairs(installed) do
-				  if lang == installed_lang then 
-					  vim.treesitter.start(0, lang)
-					  return 
-				  end
-			  end
-			  local result = require('nvim-treesitter.install').install({lang}):wait(3000)
-			  vim.treesitter.start(0, lang)
+
+			  local ok = pcall(vim.treesitter.start, data.buf, lang)
+			  if ok then return end
+
+			  if not available_set[lang] then return end
+
+			  require('nvim-treesitter.install').install({lang}):wait(3000)
+			  pcall(vim.treesitter.start, data.buf, lang)
 		  end
 	  })
   end

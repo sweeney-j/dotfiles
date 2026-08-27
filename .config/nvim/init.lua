@@ -1,7 +1,16 @@
 require("config.lazy")
 
-vim.opt.relativenumber = true
-vim.opt.shiftwidth = 4
-vim.opt.tabstop = 4
-vim.opt.smartindent = true
+local set = vim.opt
+
+set.number = true
+set.relativenumber = true
+
+set.shiftwidth = 4
+set.tabstop = 4
+set.expandtab = true
+set.autoindent = true
+set.smartindent = true
 vim.cmd('filetype indent on')
+
+set.termguicolors = true
+set.colorcolumn = "80"
