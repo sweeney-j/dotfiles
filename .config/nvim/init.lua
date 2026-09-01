@@ -14,3 +14,4 @@ vim.cmd('filetype indent on')
 
 set.termguicolors = true
 set.colorcolumn = "80"
+set.signcolumn = "yes"
